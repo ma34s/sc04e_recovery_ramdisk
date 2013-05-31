@@ -48,8 +48,8 @@ on boot
 service ueventd /sbin/ueventd
     critical
 
-#service recovery /sbin/recovery
-service recovery /sbin/recovery-prepprocess
+service recovery /sbin/recovery
+#service recovery /sbin/recovery-prepprocess
 
 service adbd /sbin/adbd recovery
     disabled
