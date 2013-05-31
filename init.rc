@@ -19,6 +19,8 @@ on init
     mkdir /efs
     mkdir /tmp
     mkdir /firmware 0771 system system
+    mkdir /external_sd
+    mount /tmp /tmp tmpfs
 
     chown root shell /tmp
     chmod 0775 /tmp
@@ -26,6 +28,9 @@ on init
 # for lkmauth
     mount vfat /dev/block/mmcblk0p1 /firmware ro
 
+# for time
+    mount_all fstab.qcom
+    start time_daemon
 # ko files for exfat
     insmod /system/lib/modules/exfat_core.ko
     insmod /system/lib/modules/exfat_fs.ko
@@ -36,12 +41,15 @@ on boot
     hostname localhost
     domainname localdomain
 
+    setprop adb.recovery 1
+    #setprop service.adb.root 1
     class_start default
 
 service ueventd /sbin/ueventd
     critical
 
-service recovery /sbin/recovery
+#service recovery /sbin/recovery
+service recovery /sbin/recovery-prepprocess
 
 service adbd /sbin/adbd recovery
     disabled

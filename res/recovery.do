@@ -36,9 +36,6 @@ on multi-csc
 
 on factory-out
 	precondition define /preload
-	mount /efs
-	write /efs/.currentlyFactoryReset "done"
-	unmount /efs	
 	echo "Coping medias..."
 	mount /preload
 	mount /data
